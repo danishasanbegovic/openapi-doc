@@ -1,0 +1,345 @@
+openapi: 3.0.3
+info:
+  title: Danis API
+  version: v1.0
+  description: |
+    REST API for managing employees, departments, and time tracking.
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+paths:
+  /auth/register:
+    post:
+      tags: [auth-controller]
+      summary: Register a new user
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "200":
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+
+  /auth/login:
+    post:
+      tags: [auth-controller]
+      summary: Log in and receive a JWT token
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+  /mitarbeiter:
+    get:
+      tags: [mitarbeiter-controller]
+      summary: Get all employees
+      operationId: getAllMitarbeiter
+      responses:
+        "200":
+          description: List of employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Mitarbeiter"
+    post:
+      tags: [mitarbeiter-controller]
+      summary: Add a new employee
+      operationId: addMitarbeiter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Mitarbeiter"
+      responses:
+        "200":
+          description: Employee created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Mitarbeiter"
+
+  /abteilungen:
+    get:
+      tags: [abteilung-controller]
+      summary: Get all departments
+      operationId: getAllAbteilungen
+      responses:
+        "200":
+          description: List of departments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Abteilung"
+    post:
+      tags: [abteilung-controller]
+      summary: Add a new department
+      operationId: addAbteilung
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Abteilung"
+      responses:
+        "200":
+          description: Department created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Abteilung"
+
+  /abteilungen/stunden/{id}:
+    get:
+      tags: [abteilung-controller]
+      summary: Get all hours for a department
+      operationId: getAbteilungStunden
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Department ID
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: List of hours for this department
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AbteilungStunden"
+
+  /abteilungen/stunden/{abteilungid}/{pspid}:
+    get:
+      tags: [abteilung-controller]
+      summary: Calculate total hours for a specific PSP within a department
+      operationId: calculateStundenperPsp
+      parameters:
+        - name: abteilungid
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: pspid
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Total hours
+          content:
+            application/json:
+              schema:
+                type: number
+                format: double
+
+  /get-stunden:
+    get:
+      tags: [stunden-controller]
+      summary: Get all logged hours
+      operationId: getStunden
+      responses:
+        "200":
+          description: List of all time statistics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ZeitStatistikEntity"
+
+  /get-psp:
+    get:
+      tags: [stunden-controller]
+      summary: Get all PSP entities
+      operationId: findAll
+      responses:
+        "200":
+          description: List of PSPs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PspEntity"
+
+  /add-stunden:
+    post:
+      tags: [stunden-controller]
+      summary: Add working hours for a PSP and employee
+      operationId: addStunden
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ZeiterfassungCreateRequest"
+      responses:
+        "200":
+          description: Hours recorded successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ZeiterfassungEntity"
+
+components:
+  schemas:
+    Abteilung:
+      type: object
+      properties:
+        abteilungID:
+          type: integer
+        name:
+          type: string
+        budget:
+          type: number
+          format: double
+        standort:
+          type: string
+
+    Mitarbeiter:
+      type: object
+      properties:
+        mitarbeiterID:
+          type: integer
+        name:
+          type: string
+        nachname:
+          type: string
+        position:
+          type: string
+          enum: [Chef, Angestellt, Freelancer, Azubi]
+        abteilung:
+          $ref: "#/components/schemas/Abteilung"
+        password:
+          type: string
+
+    RegisterRequest:
+      type: object
+      required: [name, nachname, password, position]
+      properties:
+        name:
+          type: string
+        nachname:
+          type: string
+        password:
+          type: string
+        abteilungId:
+          type: integer
+        position:
+          type: string
+          enum: [Chef, Angestellt, Freelancer, Azubi]
+
+    LoginRequest:
+      type: object
+      required: [name, password]
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT token for authentication
+
+    AbteilungStunden:
+      type: object
+      properties:
+        abteilungid:
+          type: integer
+        pspElement:
+          $ref: "#/components/schemas/PspEntity"
+        stunden:
+          type: number
+          format: double
+
+    PspEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+        beschreibung:
+          type: string
+
+    ZeiterfassungCreateRequest:
+      type: object
+      properties:
+        id:
+          type: object
+        mitarbeiterId:
+          type: integer
+        datum:
+          type: string
+          format: date
+        startzeit:
+          type: string
+          format: time
+        endzeit:
+          type: string
+          format: time
+
+    ZeiterfassungEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+        datum:
+          type: string
+          format: date
+        startzeit:
+          type: string
+          format: time
+        endzeit:
+          type: string
+          format: time
+        mitarbeiter:
+          $ref: "#/components/schemas/Mitarbeiter"
+        psp:
+          $ref: "#/components/schemas/PspEntity"
+
+    ZeitStatistikEntity:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ZeitStatistikId"
+
+    ZeitStatistikId:
+      type: object
+      properties:
+        mitarbeiterid:
+          type: integer
+        pspid:
+          type: integer
+        stunden:
+          type: number
+          format: double
+
