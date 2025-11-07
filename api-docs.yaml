@@ -59,7 +59,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Mitarbeiter"
+                  $ref: "#/components/schemas/MitarbeiterDto"
     post:
       tags: [mitarbeiter-controller]
       summary: Add a new employee
@@ -69,14 +69,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Mitarbeiter"
+              $ref: "#/components/schemas/MitarbeiterDto"
       responses:
         "200":
           description: Employee created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Mitarbeiter"
+                $ref: "#/components/schemas/MitarbeiterDto"
 
   /abteilungen:
     get:
@@ -91,7 +91,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Abteilung"
+                  $ref: "#/components/schemas/AbteilungDto"
     post:
       tags: [abteilung-controller]
       summary: Add a new department
@@ -101,14 +101,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Abteilung"
+              $ref: "#/components/schemas/AbteilungDto"
       responses:
         "200":
           description: Department created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Abteilung"
+                $ref: "#/components/schemas/AbteilungDto"
 
   /abteilungen/stunden/{id}:
     get:
@@ -131,7 +131,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/AbteilungStunden"
+                  $ref: "#/components/schemas/AbteilungStundenDto"
 
   /abteilungen/stunden/{abteilungid}/{pspid}:
     get:
@@ -171,7 +171,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ZeitStatistikEntity"
+                  $ref: "#/components/schemas/ZeitStatistikDto"
 
   /get-psp:
     get:
@@ -186,7 +186,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/PspEntity"
+                  $ref: "#/components/schemas/PspDto"
 
   /add-stunden:
     post:
@@ -205,7 +205,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ZeiterfassungEntity"
+                $ref: "#/components/schemas/ZeiterfassungDto"
 
 components:
   schemas:
