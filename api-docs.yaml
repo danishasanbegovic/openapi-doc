@@ -78,6 +78,44 @@ paths:
               schema:
                 $ref: "#/components/schemas/MitarbeiterDto"
 
+   /mitarbeiter/{id}:
+    put:
+      tags: [mitarbeiter-controller]
+      summary: Update an existing employee
+      operationId: updateMitarbeiter
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MitarbeiterDto"
+      responses:
+        "200":
+          description: Updated employee
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MitarbeiterDto"
+    delete:
+      tags: [mitarbeiter-controller]
+      summary: Delete an employee
+      operationId: deleteMitarbeiter
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Employee deleted             
+
   /abteilungen:
     get:
       tags: [abteilung-controller]
@@ -109,6 +147,44 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AbteilungDto"
+
+  /abteilungen/{id}:
+    put:
+      tags: [abteilung-controller]
+      summary: Update an existing department
+      operationId: updateAbteilung
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AbteilungDto"
+      responses:
+        "200":
+          description: Updated department
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AbteilungDto"
+    delete:
+      tags: [abteilung-controller]
+      summary: Delete a department
+      operationId: deleteAbteilung
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Department deleted
 
   /abteilungen/stunden/{id}:
     get:
@@ -206,6 +282,45 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ZeiterfassungDto"
+
+/stunden/{id}:
+    put:
+      tags: [stunden-controller]
+      summary: Update recorded hours
+      operationId: updateStunden
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ZeiterfassungCreateRequest"
+      responses:
+        "200":
+          description: Updated hours entry
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ZeiterfassungDto"
+    delete:
+      tags: [stunden-controller]
+      summary: Delete recorded hours
+      operationId: deleteStunden
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Hours entry deleted
+
 
 components:
   schemas:
