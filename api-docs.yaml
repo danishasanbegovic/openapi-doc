@@ -209,7 +209,7 @@ paths:
 
 components:
   schemas:
-    Abteilung:
+    AbteilungDto:
       type: object
       properties:
         abteilungID:
@@ -222,7 +222,7 @@ components:
         standort:
           type: string
 
-    Mitarbeiter:
+    MitarbeiterDto:
       type: object
       properties:
         mitarbeiterID:
@@ -235,7 +235,7 @@ components:
           type: string
           enum: [Chef, Angestellt, Freelancer, Azubi]
         abteilung:
-          $ref: "#/components/schemas/Abteilung"
+          $ref: "#/components/schemas/AbteilungDto"
         password:
           type: string
 
@@ -271,18 +271,18 @@ components:
           type: string
           description: JWT token for authentication
 
-    AbteilungStunden:
+    AbteilungStundenDto:
       type: object
       properties:
         abteilungid:
           type: integer
         pspElement:
-          $ref: "#/components/schemas/PspEntity"
+          $ref: "#/components/schemas/PspDto"
         stunden:
           type: number
           format: double
 
-    PspEntity:
+    PspDto:
       type: object
       properties:
         id:
@@ -307,7 +307,7 @@ components:
           type: string
           format: time
 
-    ZeiterfassungEntity:
+    ZeiterfassungDto:
       type: object
       properties:
         id:
@@ -322,11 +322,11 @@ components:
           type: string
           format: time
         mitarbeiter:
-          $ref: "#/components/schemas/Mitarbeiter"
+          $ref: "#/components/schemas/MitarbeiterDto"
         psp:
-          $ref: "#/components/schemas/PspEntity"
+          $ref: "#/components/schemas/PspDto"
 
-    ZeitStatistikEntity:
+    ZeitStatistikDto:
       type: object
       properties:
         id:
@@ -342,4 +342,3 @@ components:
         stunden:
           type: number
           format: double
-
