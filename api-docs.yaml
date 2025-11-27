@@ -249,7 +249,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/ZeitStatistikDto"
 
-   /stunden:
+  /stunden:
     get:
       tags: [stunden-controller]
       summary: Get detailed logged hours
@@ -345,6 +345,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ZeiterfassungDto"
+         "404":
+          description: Hours entry not found
     delete:
       tags: [stunden-controller]
       summary: Delete recorded hours
@@ -358,6 +360,8 @@ paths:
       responses:
         "204":
           description: Hours entry deleted
+         "404":
+          description: Hours entry not found
 
 
 components:
