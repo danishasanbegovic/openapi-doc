@@ -78,43 +78,43 @@ paths:
               schema:
                 $ref: "#/components/schemas/MitarbeiterDto"
 
-   /mitarbeiter/{id}:
-    put:
-      tags: [mitarbeiter-controller]
-      summary: Update an existing employee
-      operationId: updateMitarbeiter
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
+  /mitarbeiter/{id}:
+      put:
+        tags: [mitarbeiter-controller]
+        summary: Update an existing employee
+        operationId: updateMitarbeiter
+        parameters:
+          - name: id
+            in: path
+            required: true
             schema:
-              $ref: "#/components/schemas/MitarbeiterDto"
-      responses:
-        "200":
-          description: Updated employee
+              type: integer
+        requestBody:
+          required: true
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/MitarbeiterDto"
-    delete:
-      tags: [mitarbeiter-controller]
-      summary: Delete an employee
-      operationId: deleteMitarbeiter
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        "204":
-          description: Employee deleted             
+        responses:
+          "200":
+            description: Updated employee
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/MitarbeiterDto"
+      delete:
+        tags: [mitarbeiter-controller]
+        summary: Delete an employee
+        operationId: deleteMitarbeiter
+        parameters:
+          - name: id
+            in: path
+            required: true
+            schema:
+              type: integer
+        responses:
+          "204":
+            description: Employee deleted
 
   /abteilungen:
     get:
@@ -283,7 +283,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ZeiterfassungDto"
 
-/stunden/{id}:
+  /stunden/{id}:
     put:
       tags: [stunden-controller]
       summary: Update recorded hours
