@@ -249,6 +249,44 @@ paths:
                 items:
                   $ref: "#/components/schemas/ZeitStatistikDto"
 
+   /stunden:
+    get:
+      tags: [stunden-controller]
+      summary: Get detailed logged hours
+      operationId: getRecordedStunden
+      responses:
+        "200":
+          description: List of all recorded hours with details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ZeiterfassungDto"
+
+  /stunden/{id}:
+    get:
+      tags: [stunden-controller]
+      summary: Get a single recorded hour entry
+      operationId: getRecordedStundenById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Zeiterfassung identifier
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Requested recorded hours entry
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ZeiterfassungDto"
+        "404":
+          description: Hours entry not found
+
   /get-psp:
     get:
       tags: [stunden-controller]
