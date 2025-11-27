@@ -79,42 +79,42 @@ paths:
                 $ref: "#/components/schemas/MitarbeiterDto"
 
   /mitarbeiter/{id}:
-      put:
-        tags: [mitarbeiter-controller]
-        summary: Update an existing employee
-        operationId: updateMitarbeiter
-        parameters:
-          - name: id
-            in: path
-            required: true
-            schema:
-              type: integer
-        requestBody:
+    put:
+      tags: [mitarbeiter-controller]
+      summary: Update an existing employee
+      operationId: updateMitarbeiter
+      parameters:
+        - name: id
+          in: path
           required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MitarbeiterDto"
+      responses:
+        "200":
+          description: Updated employee
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/MitarbeiterDto"
-        responses:
-          "200":
-            description: Updated employee
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/MitarbeiterDto"
-      delete:
-        tags: [mitarbeiter-controller]
-        summary: Delete an employee
-        operationId: deleteMitarbeiter
-        parameters:
-          - name: id
-            in: path
-            required: true
-            schema:
-              type: integer
-        responses:
-          "204":
-            description: Employee deleted
+    delete:
+      tags: [mitarbeiter-controller]
+      summary: Delete an employee
+      operationId: deleteMitarbeiter
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Employee deleted
 
   /abteilungen:
     get:
@@ -264,29 +264,6 @@ paths:
                 items:
                   $ref: "#/components/schemas/ZeiterfassungDto"
 
-  /stunden/{id}:
-    get:
-      tags: [stunden-controller]
-      summary: Get a single recorded hour entry
-      operationId: getRecordedStundenById
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: Zeiterfassung identifier
-          schema:
-            type: integer
-            format: int32
-      responses:
-        "200":
-          description: Requested recorded hours entry
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ZeiterfassungDto"
-        "404":
-          description: Hours entry not found
-
   /get-psp:
     get:
       tags: [stunden-controller]
@@ -322,6 +299,27 @@ paths:
                 $ref: "#/components/schemas/ZeiterfassungDto"
 
   /stunden/{id}:
+    get:
+      tags: [ stunden-controller ]
+      summary: Get a single recorded hour entry
+      operationId: getRecordedStundenById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Zeiterfassung identifier
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Requested recorded hours entry
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ZeiterfassungDto"
+        "404":
+          description: Hours entry not found
     put:
       tags: [stunden-controller]
       summary: Update recorded hours
@@ -345,7 +343,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ZeiterfassungDto"
-         "404":
+        "404":
           description: Hours entry not found
     delete:
       tags: [stunden-controller]
@@ -360,7 +358,7 @@ paths:
       responses:
         "204":
           description: Hours entry deleted
-         "404":
+        "404":
           description: Hours entry not found
 
 
