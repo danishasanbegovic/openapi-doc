@@ -386,6 +386,9 @@ components:
           type: string
         nachname:
           type: string
+        email:
+          type: string
+          format: email
         position:
           type: string
           enum: [Chef, Angestellt, Freelancer, Azubi]
@@ -396,12 +399,15 @@ components:
 
     RegisterRequest:
       type: object
-      required: [name, nachname, password, position]
+      required: [name, nachname, email, password, position]
       properties:
         name:
           type: string
         nachname:
           type: string
+        email:
+          type: string
+          format: email
         password:
           type: string
         abteilungId:
@@ -412,9 +418,9 @@ components:
 
     LoginRequest:
       type: object
-      required: [name, password]
+      required: [email, password]
       properties:
-        name:
+        email:
           type: string
         password:
           type: string
