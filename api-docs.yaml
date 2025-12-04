@@ -21,12 +21,34 @@ paths:
             schema:
               $ref: "#/components/schemas/RegisterRequest"
       responses:
+        "202":
+          description: Registration accepted and verification email sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegistrationResponse"
+
+  /auth/verify-email:
+    post:
+      tags: [auth-controller]
+      summary: Verify email with a 6 digit code
+      operationId: verifyEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmailVerificationRequest"
+      responses:
         "200":
-          description: Registration successful
+          description: Email verified successfully
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/AuthResponse"
+
+        "400":
+          description: Invalid or expired verification code
 
   /auth/login:
     post:
@@ -415,6 +437,26 @@ components:
         position:
           type: string
           enum: [Chef, Angestellt, Freelancer, Azubi]
+
+    RegistrationResponse:
+      type: object
+      required: [message, verificationRequired]
+      properties:
+        message:
+          type: string
+        verificationRequired:
+          type: boolean
+
+    EmailVerificationRequest:
+      type: object
+      required: [email, code]
+      properties:
+        email:
+          type: string
+          format: email
+        code:
+          type: string
+          pattern: "^[0-9]{6}$"
 
     LoginRequest:
       type: object
