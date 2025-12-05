@@ -49,6 +49,29 @@ paths:
 
         "400":
           description: Invalid or expired verification code
+          
+  /auth/resend-verification:
+    post:
+      tags: [auth-controller]
+      summary: Resend verification code to an unverified email
+      operationId: resendVerificationEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResendVerificationRequest"
+      responses:
+        "202":
+          description: Verification code resent and expiry refreshed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegistrationResponse"
+        "404":
+          description: Account with the provided email was not found
+        "409":
+          description: Email is already verified
 
   /auth/login:
     post:
