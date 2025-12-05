@@ -481,6 +481,14 @@ components:
           type: string
           pattern: "^[0-9]{6}$"
 
+     ResendVerificationRequest:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+
     LoginRequest:
       type: object
       required: [email, password]
