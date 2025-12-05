@@ -481,7 +481,7 @@ components:
           type: string
           pattern: "^[0-9]{6}$"
 
-     ResendVerificationRequest:
+    ResendVerificationRequest:
       type: object
       required: [email]
       properties:
