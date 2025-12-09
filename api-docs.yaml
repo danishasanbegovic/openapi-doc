@@ -405,6 +405,141 @@ paths:
           description: Hours entry deleted
         "404":
           description: Hours entry not found
+   /overtime/policies:
+    get:
+      tags: [overtime]
+      summary: List overtime policies
+      responses:
+        "200":
+          description: Policies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OvertimePolicy"
+    post:
+      tags: [overtime]
+      summary: Create or update overtime policy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OvertimePolicy"
+      responses:
+        "200":
+          description: Stored policy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OvertimePolicy"
+
+  /overtime/entries/{id}/approval:
+    post:
+      tags: [overtime]
+      summary: Approve or reject overtime entries
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApprovalDecisionRequest"
+      responses:
+        "200":
+          description: Entry updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ZeiterfassungDto"
+        "404":
+          description: Entry not found
+
+  /overtime/analytics/employees:
+    get:
+      tags: [overtime]
+      summary: Employee overtime analytics
+      parameters:
+        - in: query
+          name: start
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: size
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Analytics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OvertimeAnalyticsDto"
+
+  /overtime/analytics/departments:
+    get:
+      tags: [overtime]
+      summary: Department overtime analytics
+      parameters:
+        - in: query
+          name: start
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: size
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Analytics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OvertimeAnalyticsDto"
+
+  /overtime/approvals:
+    get:
+      tags: [overtime]
+      summary: List overtime approvals
+      responses:
+        "200":
+          description: Approvals
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ApprovalDecisionRequest"
 
 
 components:
@@ -559,6 +694,21 @@ components:
           $ref: "#/components/schemas/MitarbeiterDto"
         psp:
           $ref: "#/components/schemas/PspDto"
+        workedHours:
+          type: number
+          format: double
+        overtimeHours:
+          type: number
+          format: double
+        approvalStatus:
+          type: string
+          enum: [NONE, PENDING, APPROVED, REJECTED]
+        violation:
+          type: boolean
+        violationCode:
+          type: string
+        violationMessage:
+          type: string
 
     ZeitStatistikDto:
       type: object
@@ -576,3 +726,56 @@ components:
         stunden:
           type: number
           format: double
+
+    OvertimePolicy:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        abteilungId:
+          type: integer
+        dailyLimitHours:
+          type: number
+          format: double
+        weeklyLimitHours:
+          type: number
+          format: double
+        maxHoursPerDay:
+          type: number
+          format: double
+        minRestHours:
+          type: number
+          format: double
+        effectiveFrom:
+          type: string
+          format: date
+        effectiveTo:
+          type: string
+          format: date
+        defaultPolicy:
+          type: boolean
+
+    ApprovalDecisionRequest:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [PENDING, APPROVED, REJECTED]
+        managerComment:
+          type: string
+
+    OvertimeAnalyticsDto:
+      type: object
+      properties:
+        targetId:
+          type: integer
+        targetType:
+          type: string
+        totalOvertime:
+          type: number
+          format: double
+        violations:
+          type: integer
+
