@@ -405,7 +405,7 @@ paths:
           description: Hours entry deleted
         "404":
           description: Hours entry not found
-   /overtime/policies:
+  /overtime/policies:
     get:
       tags: [overtime]
       summary: List overtime policies
