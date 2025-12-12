@@ -571,7 +571,7 @@ components:
           format: email
         position:
           type: string
-          enum: [Chef, Angestellt, Freelancer, Azubi]
+          enum: [Chef, Angestellt, Freelancer, Azubi, Team Lead, Admin]
         abteilung:
           $ref: "#/components/schemas/AbteilungDto"
         password:
@@ -594,7 +594,7 @@ components:
           type: integer
         position:
           type: string
-          enum: [Chef, Angestellt, Freelancer, Azubi]
+          enum: [Chef, Angestellt, Freelancer, Azubi, Team Lead, Admin]
 
     RegistrationResponse:
       type: object
