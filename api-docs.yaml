@@ -308,6 +308,30 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/ZeiterfassungDto"
+                  
+  /stunden/mitarbeiter/{mitarbeiterId}:
+    get:
+      tags: [stunden-controller]
+      summary: Get total worked hours for an employee
+      operationId: getWorkedHoursByMitarbeiter
+      parameters:
+        - name: mitarbeiterId
+          in: path
+          required: true
+          description: Identifier of the employee
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Total worked hours for the given employee
+          content:
+            application/json:
+              schema:
+                type: number
+                format: double
+        "404":
+          description: Employee not found
 
   /get-psp:
     get:
