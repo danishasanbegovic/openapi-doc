@@ -309,11 +309,11 @@ paths:
                 items:
                   $ref: "#/components/schemas/ZeiterfassungDto"
                   
-  /stunden/mitarbeiter/{mitarbeiterId}:
+  /stunden/mitarbeiter/{mitarbeiterId}/entries:
     get:
       tags: [stunden-controller]
-      summary: Get total worked hours for an employee
-      operationId: getWorkedHoursByMitarbeiter
+      summary: Get detailed time entries for an employee
+      operationId: getRecordedStundenByMitarbeiter
       parameters:
         - name: mitarbeiterId
           in: path
@@ -324,12 +324,13 @@ paths:
             format: int32
       responses:
         "200":
-          description: Total worked hours for the given employee
+          description: Recorded time entries for the given employee
           content:
             application/json:
               schema:
-                type: number
-                format: double
+                type: array
+                items:
+                  $ref: "#/components/schemas/ZeiterfassungDto"
         "404":
           description: Employee not found
 
