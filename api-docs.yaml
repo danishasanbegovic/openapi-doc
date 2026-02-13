@@ -96,6 +96,21 @@ paths:
       tags: [mitarbeiter-controller]
       summary: Get all employees
       operationId: getAllMitarbeiter
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
       responses:
         "200":
           description: List of employees
@@ -166,6 +181,21 @@ paths:
       tags: [abteilung-controller]
       summary: Get all departments
       operationId: getAllAbteilungen
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
       responses:
         "200":
           description: List of departments
@@ -284,6 +314,21 @@ paths:
       tags: [stunden-controller]
       summary: Get all logged hours
       operationId: getStunden
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
       responses:
         "200":
           description: List of all time statistics
@@ -299,6 +344,21 @@ paths:
       tags: [stunden-controller]
       summary: Get detailed logged hours
       operationId: getRecordedStunden
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
       responses:
         "200":
           description: List of all recorded hours with details
@@ -322,6 +382,20 @@ paths:
           schema:
             type: integer
             format: int32
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
       responses:
         "200":
           description: Recorded time entries for the given employee
@@ -339,6 +413,21 @@ paths:
       tags: [stunden-controller]
       summary: Get all PSP entities
       operationId: findAll
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
       responses:
         "200":
           description: List of PSPs
@@ -434,6 +523,22 @@ paths:
     get:
       tags: [overtime]
       summary: List overtime policies
+      operationId: overtimePoliciesGet
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
       responses:
         "200":
           description: Policies
@@ -446,6 +551,7 @@ paths:
     post:
       tags: [overtime]
       summary: Create or update overtime policy
+      operationId: overtimePoliciesPost
       requestBody:
         required: true
         content:
@@ -464,6 +570,7 @@ paths:
     post:
       tags: [overtime]
       summary: Approve or reject overtime entries
+      operationId: overtimeEntriesIdApprovalPost
       parameters:
         - name: id
           in: path
@@ -490,6 +597,7 @@ paths:
     get:
       tags: [overtime]
       summary: Employee overtime analytics
+      operationId: overtimeAnalyticsEmployeesGet
       parameters:
         - in: query
           name: start
@@ -523,6 +631,7 @@ paths:
     get:
       tags: [overtime]
       summary: Department overtime analytics
+      operationId: overtimeAnalyticsDepartmentsGet
       parameters:
         - in: query
           name: start
@@ -556,6 +665,22 @@ paths:
     get:
       tags: [overtime]
       summary: List overtime approvals
+      operationId: overtimeApprovalsGet
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
       responses:
         "200":
           description: Approvals
