@@ -91,6 +91,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AuthResponse"
+  /auth/sso:
+    post:
+      tags: [ auth-controller ]
+      summary: Login or register with Google/Apple ID token
+      operationId: ssoLoginOrRegister
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SsoAuthRequest"
+      responses:
+        "200":
+          description: SSO authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          description: Invalid token or unsupported provider
+
   /mitarbeiter:
     get:
       tags: [mitarbeiter-controller]
@@ -778,6 +799,16 @@ components:
         email:
           type: string
           format: email
+
+    SsoAuthRequest:
+      type: object
+      required: [provider, idToken]
+      properties:
+        provider:
+          type: string
+          enum: [GOOGLE, APPLE]
+        idToken:
+          type: string
 
     LoginRequest:
       type: object
